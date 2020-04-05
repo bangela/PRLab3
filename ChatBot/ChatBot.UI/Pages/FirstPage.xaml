@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvx:MvxContentPage  xmlns:mvx="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms" 
+                     xmlns="http://xamarin.com/schemas/2014/forms"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     mc:Ignorable="d"
+                     xmlns:viewModels="clr-namespace:ChatBot.Core.ViewModels;assembly=ChatBot.Core" 
+                     xmlns:converters="clr-namespace:ChatBot.Convertors"
+                     x:TypeArguments="viewModels:FirstPageViewModel"
+                     x:Class="ChatBot.Pages.FirstPage"
+                     Title="Angela Bot">
+    <mvx:MvxContentPage.Resources>
+        <converters:MessageTypeConvertor x:Key="MessageTypeConvertor" />
+    </mvx:MvxContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <mvx:MvxListView ItemsSource="{Binding Messages}"
+                         HasUnevenRows="True"
+                         SelectionMode="None"
+                         x:Name="List">
+                <mvx:MvxListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Type, Converter={x:StaticResource MessageTypeConvertor}}" Grid.Column="0" FontAttributes="Bold"/>
+                                <Label Text="{Binding Data}" Grid.Column="1" HorizontalTextAlignment="Start"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </mvx:MvxListView.ItemTemplate>
+            </mvx:MvxListView>
+            <StackLayout Orientation="Horizontal">
+                <Entry HorizontalOptions="FillAndExpand"
+                       Text="{Binding Msg}"
+                       Placeholder="Message"
+                       FontSize="14"/>
+                <Button Text="Send"
+                        Command="{Binding SendCommand}"/>
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</mvx:MvxContentPage>
